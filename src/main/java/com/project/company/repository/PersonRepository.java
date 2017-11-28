@@ -1,6 +1,7 @@
 package com.project.company.repository;
 
-import com.project.company.model.Person;
+import com.project.company.entities.Person;
+import com.project.company.entities.Position;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,6 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
 
     List<Person> deleteByName(String name);
 
+
+    //Person[] findByPosition(Position position);
 }

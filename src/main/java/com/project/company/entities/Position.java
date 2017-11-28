@@ -1,4 +1,4 @@
-package com.project.company.model;
+package com.project.company.entities;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -15,7 +15,7 @@ public class Position {
     @OneToMany(fetch= FetchType.EAGER, mappedBy = "position")
     private List<Person> persons;
 
-    private String position;
+    public String position;
 
     public Position() {
     }
@@ -34,6 +34,14 @@ public class Position {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public List<Person> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(List<Person> persons) {
+        this.persons = persons;
     }
 
     @Override

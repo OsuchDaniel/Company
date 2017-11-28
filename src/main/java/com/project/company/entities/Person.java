@@ -1,7 +1,6 @@
-package com.project.company.model;
+package com.project.company.entities;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
-import java.util.Optional;
 
 @Entity
 @Component
@@ -15,7 +14,8 @@ public class Person {
     private String surname;
     private String email;
 
-    @OneToOne
+    @ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name = "position_id")
     private Position position;
 
     public Person() {

@@ -1,6 +1,6 @@
 package com.project.company.repository;
 
-import com.project.company.model.Position;
+import com.project.company.entities.Position;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
