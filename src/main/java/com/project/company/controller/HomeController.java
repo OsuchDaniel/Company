@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import sun.plugin2.message.Message;
 
+import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +38,22 @@ public class HomeController {
 
     //private static final org.apache.log4j.Logger logger = Logger.getLogger(HomeController.class);
 
-    @RequestMapping(value = {"/persons"}, method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    public String index() {
+        return "Index";
+    }
+
+    @RequestMapping(value = {"/persons"}, method = RequestMethod.GET)
+    public String Persons(){
+        return "Persons";
+    }
+
+    @RequestMapping(value = {"/api/persons"}, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity showPersons() {
         return new ResponseEntity(GetByParam("", EnumParams.All), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/api/add", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity addPerson(@RequestBody Employee employee) {
 
         try {
@@ -73,27 +85,27 @@ public class HomeController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete/{name}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = "/api/delete/{name}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity removePerson(@PathVariable("name") String name) {
         return new ResponseEntity(personRepository.deleteByName(name), HttpStatus.OK);
     }
 
-    @RequestMapping(value = {"/search/name/{name}"}, method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = {"/api/search/name/{name}"}, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity findByName(@PathVariable("name") String name) {
         return new ResponseEntity(GetByParam(name, EnumParams.ByName), HttpStatus.OK);
     }
 
-    @RequestMapping(value = {"/search/surname/{surname}"}, method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = {"/api/search/surname/{surname}"}, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity findBySurname(@PathVariable("surname") String surname) {
         return new ResponseEntity(GetByParam(surname, EnumParams.BySurname), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/search/email/{email}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/api/search/email/{email}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity findByEmail(@PathVariable("email") String email) {
         return new ResponseEntity(GetByParam(email, EnumParams.ByEmail), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/search/position", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/api/search/position", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity position() {
         List<PersonInPosition> personInPositions = new ArrayList<>();
         try {
