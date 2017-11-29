@@ -1,6 +1,6 @@
 package com.project.company.entities;
 import org.springframework.stereotype.Component;
-
+import java.util.Set;
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,8 +12,8 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(fetch= FetchType.EAGER, mappedBy = "position")
-    private List<Person> persons;
+    @OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "position")
+    private Set<Person> persons;
 
     public String position;
 
@@ -36,11 +36,11 @@ public class Position {
         this.position = position;
     }
 
-    public List<Person> getPersons() {
+    public Set<Person> getPersons() {
         return persons;
     }
 
-    public void setPersons(List<Person> persons) {
+    public void setPersons(Set<Person> persons) {
         this.persons = persons;
     }
 

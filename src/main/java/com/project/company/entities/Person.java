@@ -1,4 +1,5 @@
 package com.project.company.entities;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
 

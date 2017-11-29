@@ -6,14 +6,15 @@ public class Employee {
     String email;
     String positionName;
 
+
+    public Employee() {
+    }
+
     public Employee(String name, String surname, String email, String positionName) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.positionName = positionName;
-    }
-
-    public Employee() {
     }
 
     public String getName() {
