@@ -28,11 +28,11 @@ $(document).ready(function(){
     	$.ajax({
 			type : "POST",
 			contentType : "application/json",
-			url : window.location + "api/add",
+			url : "http://localhost:8084/api/add",
 			data : JSON.stringify(data),
 			dataType: 'text',
 			success : function(result) {
-			    alert("Działa!!!")
+			    alert("Dodano")
 			},
 			error : function(e) {
 				alert("Error!")
@@ -52,5 +52,22 @@ $(document).ready(function(){
                 alert('error');
             }
         });
+    }
+
+    function ajaxDelete(){
+            $.ajax({
+                type: "DELETE",
+                contentType: "application/json",
+                url : "http://localhost:8084/api/delete/",
+                data : {id:id},
+                dataType: 'text',
+                success : function(result) {
+                		alert("Dodano")
+                },
+                error : function(e) {
+                	alert("Error!")
+                }
+		});
+
     }
 });

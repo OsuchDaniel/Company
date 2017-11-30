@@ -8,18 +8,18 @@ import com.project.company.repository.PersonRepository;
 import com.project.company.repository.PositionRepository;
 //import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import sun.plugin2.message.Message;
 
 import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 /*dodawanie nowego pracownika (wymagane atrybuty: imię, nazwisko, stanowisko, adres email)
@@ -40,17 +40,27 @@ public class HomeController {
 
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String index() {
-        return "Index";
+        return "index";
     }
 
     @RequestMapping(value = {"/persons"}, method = RequestMethod.GET)
-    public String Persons(){
-        return "Persons";
+    public String Persons() {
+        return "persons";
+    }
+
+    @RequestMapping(value = {"/search"}, method = RequestMethod.GET)
+    public String Search(){
+        return "search";
     }
 
     @RequestMapping(value = {"/api/persons"}, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity showPersons() {
         return new ResponseEntity(GetByParam("", EnumParams.All), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = {"/add"}, method = RequestMethod.GET)
+    public String addPerson() {
+        return "add";
     }
 
     @RequestMapping(value = "/api/add", method = RequestMethod.POST, produces = "application/json")
@@ -73,6 +83,7 @@ public class HomeController {
                 newPerson.setPosition(newPosition);
             }
 
+
             newPerson.setName(employee.getName());
             newPerson.setSurname(employee.getSurname());
             newPerson.setEmail(employee.getEmail());
@@ -85,13 +96,23 @@ public class HomeController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/api/delete/{name}", method = RequestMethod.DELETE, produces = "application/json")
-    public ResponseEntity removePerson(@PathVariable("name") String name) {
-        return new ResponseEntity(personRepository.deleteByName(name), HttpStatus.OK);
+    @RequestMapping(path = "/api/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> removePerson(@PathVariable long id) {
+        try {
+            personRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @RequestMapping(value = {"/byName"}, method = RequestMethod.GET)
+    public String findByName() {
+        return "byName";
     }
 
     @RequestMapping(value = {"/api/search/name/{name}"}, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity findByName(@PathVariable("name") String name) {
+    public ResponseEntity findByName(@PathVariable String name) {
         return new ResponseEntity(GetByParam(name, EnumParams.ByName), HttpStatus.OK);
     }
 
@@ -103,6 +124,11 @@ public class HomeController {
     @RequestMapping(value = "/api/search/email/{email}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity findByEmail(@PathVariable("email") String email) {
         return new ResponseEntity(GetByParam(email, EnumParams.ByEmail), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = {"/positions"}, method = RequestMethod.GET)
+    public String positions() {
+        return "positions";
     }
 
     @RequestMapping(value = "/api/search/position", method = RequestMethod.GET, produces = "application/json")
@@ -120,7 +146,6 @@ public class HomeController {
             //logger.error("Error message", ex);
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
         return new ResponseEntity(personInPositions, HttpStatus.OK);
     }
 
@@ -144,7 +169,7 @@ public class HomeController {
         }
 
         for (Person p : personList) {
-            employees.add(new Employee(p.getName(), p.getSurname(), p.getEmail(), p.getPosition().getPosition()));
+            employees.add(new Employee(p.getName(), p.getSurname(), p.getEmail(), p.getPosition().getPosition(), p.getId()));
         }
         return employees;
     }

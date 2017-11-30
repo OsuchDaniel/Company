@@ -5,16 +5,26 @@ public class Employee {
     String surname;
     String email;
     String positionName;
+    Long id;
 
 
     public Employee() {
     }
 
-    public Employee(String name, String surname, String email, String positionName) {
+    public Employee(String name, String surname, String email, String positionName, Long id) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.positionName = positionName;
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

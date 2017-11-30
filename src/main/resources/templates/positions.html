@@ -1,10 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:insert="~{fragments/header :: header}" />
 
+<body>
+    <div th:insert="~{fragments/menu::menu}" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Iloso osob na danym stanowisku</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered" id="persons">
+                    <tr>
+                        <td>Stanowisko</td>
+                        <td>Ilość osób</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var table = document.getElementById('persons');
+        function init() {
+            $.ajax({
+                type: "GET",
+                url: "/api/search/position",
+                contentType: "application/json",
+                success: function (result) {
+                    console.log(result);
+                    createTable(result);
+                },
+                error: function (result) {
+                    alert('error');
+                }
+            });
+        }
+
+        function createTable(result) {
+            for (var i = 1; i < result.length; i++) {
+
+                var row = table.insertRow(i);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+
+                cell1.innerHTML = result[i].name;
+                cell2.innerHTML = result[i].count;
+
+            }
+        }
+        window.onload = init;
+
+    </script>
 </body>
+
 </html>

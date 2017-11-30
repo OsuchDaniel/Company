@@ -12,7 +12,7 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "position")
+    @OneToMany(fetch= FetchType.EAGER, mappedBy = "position")
     private Set<Person> persons;
 
     public String position;

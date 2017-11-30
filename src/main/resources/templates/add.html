@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:insert="~{fragments/header :: header}" />
+
+<body>
+    <div th:insert="~{fragments/menu::menu}" />
+    <div class="container">
+        <h3 style="margin-top:20px;margin-bottom:20px">Company RestAPI</h3>
+        <div class="row">
+            <div class="col-md-7">
+                <br/>
+                <h5>Create person</h5>
+                <form id="stackedForm">
+                    <div class="form-group">
+                        <label for="name">FirstName:</label>
+                        <input type="text" class="form-control" id="name" required placeholder="Enter FirstName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="surname">LastName:</label>
+                        <input type="text" class="form-control" id="surname" required placeholder="Enter LastName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" required placeholder="Enter email" />
+                    </div>
+                    <div class="form-group">
+                        <label for="positionName">Position name:</label>
+                        <input type="text" class="form-control" id="positionName" required placeholder="Position name" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

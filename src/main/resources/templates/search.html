@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:insert="~{fragments/header :: header}"></div>
+
+<body>
+    <div th:insert="~{fragments/menu::menu}" />
+    <div class="container">
+        <h3 style="margin-top:20px;margin-bottom:20px">Company RestAPI</h3>
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-search"></span>
+                            <span class="label-icon">Search</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-left" role="menu" id="searchParam" placeholder="Select category and search ...">
+                            <li data-input="name">
+                                <a href="#">Search By name</a>
+                            </li>
+                            <li data-input="surname">
+                                <a href="#">Search By surname</a>
+                            </li>
+                            <li data-input="email">
+                                <a href="#">Search By email</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <input type="text" id="searchInput" class="form-control">
+                    <div class="input-group-btn">
+                        <button type="button" onclick="search()" class="btn btn-search btn-default">
+                        Szukaj
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered" id="persons">
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var searchValue = "name";
+        $('#searchParam li').click(function () {
+            searchValue = $(this).attr('data-input');
+        });
+
+        function createTable(result) {
+            var table = document.getElementById('persons');
+            for (var i = 0; i < result.length; i++) {
+                var row = table.insertRow(i);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+
+                cell1.innerHTML = result[i].name;
+                cell2.innerHTML = result[i].surname;
+                cell3.innerHTML = result[i].email;
+                cell4.innerHTML = result[i].positionName;
+                var cell6 = result[i].id;
+                cell5.innerHTML = "<button type='button' class='btn' onclick=\"usun(\'" + result[i].id + "\')\">Del</button>";
+            }
+        }
+
+        function usun(id) {
+            console.log('usuwam:' + id);
+            $.ajax({
+                type: 'DELETE',
+                url: "/api/delete/" + id,
+                success: function (response) {
+                    search();
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+
+        function search() {
+            var requestUrl = "";
+            var input = document.getElementById("searchInput");
+            if (input.value == "") {
+                requestUrl += "/api/persons"
+            } else {
+                requestUrl += "/api/search/" + searchValue + "/" + input.value;
+            }
+            $.ajax({
+                type: "GET",
+                url: requestUrl,
+                contentType: "application/json",
+                success: function (result) {
+                    console.log(result);
+                    $("#persons").empty();
+                    createTable(result);
+                },
+                error: function (result) {
+                    console.log('error' + result);
+                }
+            });
+        }
+        window.onload = search;
+    </script>
+</body>
+
+</html>
