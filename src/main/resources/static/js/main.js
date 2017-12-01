@@ -28,7 +28,7 @@ $(document).ready(function(){
     	$.ajax({
 			type : "POST",
 			contentType : "application/json",
-			url : "http://localhost:8084/api/add",
+			url : "/api/add",
 			data : JSON.stringify(data),
 			dataType: 'text',
 			success : function(result) {
@@ -58,7 +58,7 @@ $(document).ready(function(){
             $.ajax({
                 type: "DELETE",
                 contentType: "application/json",
-                url : "http://localhost:8084/api/delete/",
+                url : "/api/delete/",
                 data : {id:id},
                 dataType: 'text',
                 success : function(result) {

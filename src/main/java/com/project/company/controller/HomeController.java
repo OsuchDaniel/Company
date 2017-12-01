@@ -22,10 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-/*dodawanie nowego pracownika (wymagane atrybuty: imię, nazwisko, stanowisko, adres email)
-zwracanie listy wszystkich pracowników z możliwością filtrowania po adresie email, imieniu, nazwisku
-zwracanie listy wszystkich stanowisk razem z ilością pracowników przypisanych do nich
-usuwanie danego pracownika z listy*/
+
 
 @Controller
 public class HomeController {
