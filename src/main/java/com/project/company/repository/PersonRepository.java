@@ -15,8 +15,4 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
 
     List<Person> findByEmail(String email);
 
-    List<Person> deleteByName(String name);
-
-
-    //Person[] findByPosition(Position position);
 }

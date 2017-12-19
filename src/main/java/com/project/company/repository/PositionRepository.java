@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface PositionRepository extends CrudRepository<Position, Long> {
 
-    List<Position> findByPosition(String position);
+    Position findByPosition(String position);
 
-    boolean existsByPosition(String position);
+
 }

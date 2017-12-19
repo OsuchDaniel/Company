@@ -41,33 +41,4 @@ $(document).ready(function(){
 
     }
 
-    function ajaxGet(){
-        $.ajax({
-            type: "GET",
-            contentType: "application/json",
-            success: function(result){
-                console.log(result);
-            },
-            error: function(result){
-                alert('error');
-            }
-        });
-    }
-
-    function ajaxDelete(){
-            $.ajax({
-                type: "DELETE",
-                contentType: "application/json",
-                url : "/api/delete/",
-                data : {id:id},
-                dataType: 'text',
-                success : function(result) {
-                		alert("Dodano")
-                },
-                error : function(e) {
-                	alert("Error!")
-                }
-		});
-
-    }
 });

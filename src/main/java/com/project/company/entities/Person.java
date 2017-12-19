@@ -1,6 +1,8 @@
 package com.project.company.entities;
+
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,7 +17,7 @@ public class Person {
     private String surname;
     private String email;
 
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "position_id")
     private Position position;
 
